@@ -1,0 +1,31 @@
+{
+  "name": "loki-reverse-proxy",
+  "version": "1.0.0",
+  "description": "Reverse proxy for Loki with proper Grafana API authentication",
+  "type": "module",
+  "main": "src/proxy.js",
+  "scripts": {
+    "start": "node --env-file=.env ./src/proxy.js"
+  },
+  "keywords": [
+    "loki",
+    "grafana",
+    "proxy",
+    "reverse",
+    "reverse-proxy",
+    "api"
+  ],
+  "author": "GENTILHOMME Thomas <gentilhomme.thomas@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/http-proxy": "^9.5.0",
+    "@openally/timestore": "^1.5.1",
+    "fastify": "^4.26.2",
+    "pino-pretty": "^11.0.0",
+    "undici": "^6.10.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@nodesecure/eslint-config": "^1.9.0"
+  }
+}
