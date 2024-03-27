@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Reverse proxy for Loki with proper Grafana API authentication",
   "type": "module",
-  "main": "src/proxy.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node --env-file=.env ./src/proxy.js"
+    "start": "node --env-file=.env ./dist/index.js",
+    "build": "tsc",
+    "test": "glob -c \"tsx --test\" \"./test/**/*.spec.ts\"",
+    "coverage": "c8 -r html npm test"
   },
   "keywords": [
     "loki",
@@ -26,6 +29,11 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@nodesecure/eslint-config": "^1.9.0"
+    "@nodesecure/eslint-config": "^1.9.0",
+    "@types/node": "^20.11.30",
+    "c8": "^9.1.0",
+    "glob": "^10.3.10",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
   }
 }
