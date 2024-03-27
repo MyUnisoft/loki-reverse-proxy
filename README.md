@@ -12,6 +12,7 @@ Under the hood it use Grafana `/api/auth/keys` API to validate the token and the
 $ git clone https://github.com/MyUnisoft/loki-reverse-proxy.git
 $ cd loki-reverse-proxy
 $ npm ci
+$ npm run build
 ```
 
 ### Environment Variables
@@ -21,7 +22,10 @@ To configure the project you have to register (set) environment variables on you
 ```ini
 GRAFANA_URL=""
 LOKI_URL=""
-SERVER_PORT=3000
+SERVER_PORT=4000
+SERVER_SSL_ENABLED=false
+# Enable if behind a proxy like Nginx or Haproxy
+TRUST_PROXY=false
 ```
 
 ### Let's go baby 🔥
@@ -35,15 +39,15 @@ $ npm start
 Here is the full Zod schema for envs:
 
 ```js
-const kEnvSchema = z.object({
+const envSchema = z.object({
   GRAFANA_URL: z.string().url().trim(),
   LOKI_URL: z.string().url().trim(),
-  TOKEN_CACHE_MS: z.coerce.number().default(1_000 * 60 * 5),
-  SERVER_PORT: z.coerce.number().default(0),
+  TOKEN_CACHE_MS: z.coerce.number().optional().default(1_000 * 60 * 5),
+  SERVER_PORT: z.coerce.number().optional().default(0),
   SERVER_SSL_ENABLED: z.boolean().optional().default(false),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
-  TRUST_PROXY: z.boolean().default(false)
+  TRUST_PROXY: z.boolean().optional().default(false)
 });
 ```
 

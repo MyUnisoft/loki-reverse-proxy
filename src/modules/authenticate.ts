@@ -1,17 +1,21 @@
 // Import Third-party Dependencies
 import * as undici from "undici";
 
+// Import Internal Dependencies
+import { AuthenticationContext } from "../context.js";
+
 // CONSTANTS
 const kBearerPrefix = "Bearer ";
 const kGrafanaInvalidApiKey = "invalid API key";
 
-/**
- * @param {!string} authorization
- */
+export type AuthenticateResult =
+  { error: true; message: string } |
+  { error: false };
+
 export async function authenticate(
-  authorization,
-  ctx
-) {
+  authorization: string,
+  ctx: AuthenticationContext
+): Promise<AuthenticateResult> {
   if (!authorization.startsWith(kBearerPrefix)) {
     return { error: true, message: "Unauthorized" };
   }
@@ -22,10 +26,11 @@ export async function authenticate(
   }
 
   try {
-    const uri = new URL("/api/auth/keys", ctx.grafanaApi);
+    const uri = new URL("api/auth/keys", ctx.grafanaApi);
 
     const httpResponse = await undici.request(uri, {
       method: "GET",
+      dispatcher: ctx.grafanaAgent,
       headers: {
         authorization: `Bearer ${token}`
       }
@@ -37,7 +42,9 @@ export async function authenticate(
       return { error: false };
     }
 
-    const data = await httpResponse.body.json();
+    const data = await httpResponse.body.json() as {
+      message: string;
+    };
 
     return {
       error: true,
@@ -46,7 +53,7 @@ export async function authenticate(
   }
   catch (error) {
     ctx.store.delete(token);
-    ctx.log.error(error.toString());
+    ctx.logger.error(error.toString());
 
     return { error: true, message: kGrafanaInvalidApiKey };
   }
