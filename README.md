@@ -44,6 +44,7 @@ const envSchema = z.object({
   LOKI_URL: z.string().url().trim(),
   TOKEN_CACHE_MS: z.coerce.number().optional().default(1_000 * 60 * 5),
   SERVER_PORT: z.coerce.number().optional().default(0),
+  SERVER_HOST: z.string().optional(),
   SERVER_SSL_ENABLED: z.boolean().optional().default(false),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
