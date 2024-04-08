@@ -1,3 +1,6 @@
+// Import Node.js Dependencies
+import { readFileSync } from "node:fs";
+
 // Import Third-party Dependencies
 import { TimeStore } from "@openally/timestore";
 
@@ -16,7 +19,10 @@ const store = new TimeStore({
 const serverOptions = {
   trustProxy: env.TRUST_PROXY,
   https: env.SERVER_SSL_ENABLED ?
-    { key: env.SERVER_SSL_KEY, cert: env.SERVER_SSL_CERT } :
+    {
+      key: readFileSync(env.SERVER_SSL_KEY!, "utf-8"),
+      cert: readFileSync(env.SERVER_SSL_CERT!, "utf-8")
+    } :
     null,
   disableRequestLogging: true,
   logger: {
