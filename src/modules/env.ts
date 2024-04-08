@@ -11,7 +11,8 @@ const envSchema = z.object({
   SERVER_SSL_ENABLED: z.coerce.boolean().optional().default(false),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
-  TRUST_PROXY: z.coerce.boolean().optional().default(false)
+  TRUST_PROXY: z.coerce.boolean().optional().default(false),
+  SELF_MONITORING: z.coerce.boolean().optional().default(false)
 });
 
 export type ENV = z.infer<typeof envSchema>;

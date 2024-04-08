@@ -22,10 +22,20 @@ To configure the project you have to register (set) environment variables on you
 ```ini
 GRAFANA_URL=""
 LOKI_URL=""
+
+SERVER_HOST=xxx.domain.com
 SERVER_PORT=4000
+
+# SSL/TLS Configuration
 SERVER_SSL_ENABLED=false
-# Enable if behind a proxy like Nginx or Haproxy
+SERVER_SSL_CERT=/absolute/path/to/file.crt
+SERVER_SSL_KEY=/absolute/path/to/file.key
+
+# Enable if behind a proxy like NGINX or Haproxy
 TRUST_PROXY=false
+
+# Automatically forward pino (logger) logs to LOKI_URL
+SELF_MONITORING=false
 ```
 
 ### Let's go baby 🔥
@@ -48,7 +58,8 @@ const envSchema = z.object({
   SERVER_SSL_ENABLED: z.boolean().optional().default(false),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
-  TRUST_PROXY: z.boolean().optional().default(false)
+  TRUST_PROXY: z.boolean().optional().default(false),
+  SELF_MONITORING: z.coerce.boolean().optional().default(false)
 });
 ```
 
