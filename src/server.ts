@@ -30,7 +30,7 @@ export function buildServer(
   server.addHook("onResponse", async(request, reply) => {
     if (request.method !== "OPTIONS") {
       request.log.info(
-        `response returned "${request.method} ${request.raw.url}",`
+        `(${request.id}) response returned "${request.method} ${request.raw.url}",`
           + ` statusCode: ${reply.raw.statusCode} (${reply.elapsedTime.toFixed(3)}ms)`
       );
     }
