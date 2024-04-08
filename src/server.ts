@@ -5,6 +5,7 @@ import https from "node:https";
 // Import Third-party Dependencies
 import fastify, { FastifyHttpOptions, FastifyHttpsOptions, FastifyInstance } from "fastify";
 import proxy from "@fastify/http-proxy";
+import UAParser from "ua-parser-js";
 import { getGlobalDispatcher } from "undici";
 
 // Import Internal Dependencies
@@ -22,8 +23,13 @@ export function buildServer(
   server.log.info(`GRAFANA_URL: ${context.grafanaApi}`);
 
   server.addHook("onRequest", async(request) => {
+    const userAgent = new UAParser(request.headers["user-agent"])
+      .getResult();
+
     if (request.method !== "OPTIONS") {
-      request.log.info(`(${request.id}) receiving request "${request.method} ${request.raw.url}"`);
+      const uaLog = formatUserAgentLog(userAgent);
+
+      request.log.info(`(${request.id}|${uaLog}) receiving request "${request.method} ${request.raw.url}"`);
     }
   });
 
@@ -60,4 +66,10 @@ export function buildServer(
   });
 
   return server;
+}
+
+function formatUserAgentLog(parsedUserAgent: UAParser.IResult): string {
+  const { browser: uaBrowser, os: uaOs } = parsedUserAgent;
+
+  return (uaBrowser.name && uaOs.name) ? `${uaOs.name}/${uaBrowser.name}` : parsedUserAgent.ua;
 }
