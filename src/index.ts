@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 
 // Import Third-party Dependencies
 import { TimeStore } from "@openally/timestore";
+import pino from "pino";
+import type { LokiOptions } from "pino-loki";
 
 // Import Internal Dependencies
 import { buildServer } from "./server.js";
@@ -16,6 +18,31 @@ const store = new TimeStore({
   keepEventLoopAlive: false
 });
 
+const targets: pino.TransportTargetOptions [] = [
+  {
+    target: "pino-pretty",
+    options: {
+      ignore: "pid,reqId"
+    }
+  }
+];
+if (env.SELF_MONITORING) {
+  const lokiTransport = pino.transport<LokiOptions>({
+    target: "pino-loki",
+    options: {
+      batching: true,
+      interval: 5,
+      host: env.LOKI_URL,
+      // Note: allow custom configuration of labels (& others options?)
+      labels: {
+        app: "loki-reverse-proxy",
+        host: env.SERVER_HOST ?? "localhost"
+      }
+    }
+  });
+  targets.push(lokiTransport);
+}
+
 const serverOptions = {
   trustProxy: env.TRUST_PROXY,
   https: env.SERVER_SSL_ENABLED ?
@@ -27,10 +54,7 @@ const serverOptions = {
   disableRequestLogging: true,
   logger: {
     transport: {
-      target: "pino-pretty",
-      options: {
-        ignore: "pid,reqId"
-      }
+      targets
     },
     level: "info"
   }
