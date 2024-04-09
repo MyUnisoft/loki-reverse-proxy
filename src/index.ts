@@ -18,7 +18,7 @@ const store = new TimeStore({
   keepEventLoopAlive: false
 });
 
-const targets: any[] = [
+const targets: pino.TransportTargetOptions [] = [
   {
     target: "pino-pretty",
     options: {
