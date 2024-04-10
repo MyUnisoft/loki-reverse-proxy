@@ -4,7 +4,6 @@ import { readFileSync } from "node:fs";
 // Import Third-party Dependencies
 import { TimeStore } from "@openally/timestore";
 import pino from "pino";
-import type { LokiOptions } from "pino-loki";
 
 // Import Internal Dependencies
 import { buildServer } from "./server.js";
@@ -27,11 +26,10 @@ const targets: pino.TransportTargetOptions [] = [
   }
 ];
 if (env.SELF_MONITORING) {
-  const lokiTransport = pino.transport<LokiOptions>({
+  targets.push({
     target: "pino-loki",
     options: {
-      batching: true,
-      interval: 5,
+      batching: false,
       host: env.LOKI_URL,
       // Note: allow custom configuration of labels (& others options?)
       labels: {
@@ -40,7 +38,6 @@ if (env.SELF_MONITORING) {
       }
     }
   });
-  targets.push(lokiTransport);
 }
 
 const serverOptions = {
