@@ -8,12 +8,18 @@ const envSchema = z.object({
   TOKEN_CACHE_MS: z.coerce.number().optional().default(1_000 * 60 * 5),
   SERVER_PORT: z.coerce.number().optional().default(0),
   SERVER_HOST: z.string().optional(),
-  SERVER_SSL_ENABLED: z.coerce.boolean().optional().default(false),
+  SERVER_SSL_ENABLED: zBoolean("false"),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
-  TRUST_PROXY: z.coerce.boolean().optional().default(false),
-  SELF_MONITORING: z.coerce.boolean().optional().default(false)
+  TRUST_PROXY: zBoolean("false"),
+  SELF_MONITORING: zBoolean("false")
 });
+
+function zBoolean(defaultValue?: "false" | "true") {
+  const zEnum = z.enum(["true", "false"]).transform((value) => value === "true");
+
+  return defaultValue ? zEnum.optional().default(defaultValue) : zEnum;
+}
 
 export type ENV = z.infer<typeof envSchema>;
 
