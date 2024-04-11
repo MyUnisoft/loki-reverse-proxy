@@ -29,7 +29,8 @@ if (env.SELF_MONITORING) {
   targets.push({
     target: "pino-loki",
     options: {
-      batching: false,
+      batching: true,
+      interval: 5,
       host: env.LOKI_URL,
       // Note: allow custom configuration of labels (& others options?)
       labels: {
