@@ -11,6 +11,7 @@ const envSchema = z.object({
   SERVER_SSL_ENABLED: zBoolean("false"),
   SERVER_SSL_CERT: z.string().optional(),
   SERVER_SSL_KEY: z.string().optional(),
+  SERVER_SSL_CA: z.string().optional(),
   TRUST_PROXY: zBoolean("false"),
   SELF_MONITORING: zBoolean("false")
 });

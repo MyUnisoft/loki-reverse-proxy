@@ -46,7 +46,8 @@ const serverOptions = {
   https: env.SERVER_SSL_ENABLED ?
     {
       key: readFileSync(env.SERVER_SSL_KEY!, "utf-8"),
-      cert: readFileSync(env.SERVER_SSL_CERT!, "utf-8")
+      cert: readFileSync(env.SERVER_SSL_CERT!, "utf-8"),
+      ca: typeof env.SERVER_SSL_CA === "string" ? readFileSync(env.SERVER_SSL_CA, "utf-8") : void 0
     } :
     null,
   disableRequestLogging: true,
