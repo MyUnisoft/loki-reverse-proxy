@@ -2,15 +2,15 @@
 import * as undici from "undici";
 
 // Import Internal Dependencies
-import { AuthenticationContext } from "../context.js";
+import type { AuthenticationContext } from "../context.js";
 
 // CONSTANTS
 const kBearerPrefix = "Bearer ";
 const kGrafanaInvalidApiKey = "invalid API key";
 
 export type AuthenticateResult =
-  { error: true; message: string } |
-  { error: false };
+  { error: true; message: string; } |
+  { error: false; };
 
 export async function authenticate(
   authorization: string,
@@ -51,7 +51,7 @@ export async function authenticate(
       message: data.message ?? kGrafanaInvalidApiKey
     };
   }
-  catch (error) {
+  catch (error: any) {
     ctx.store.delete(token);
     ctx.logger.error(error.toString());
 

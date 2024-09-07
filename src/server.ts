@@ -1,19 +1,15 @@
-// Import Node.js Dependencies
-import http from "node:http";
-import https from "node:https";
-
 // Import Third-party Dependencies
-import fastify, { FastifyHttpOptions, FastifyHttpsOptions, FastifyInstance } from "fastify";
+import fastify, { type FastifyServerOptions, type FastifyInstance } from "fastify";
 import proxy from "@fastify/http-proxy";
 import UAParser from "ua-parser-js";
 import { getGlobalDispatcher } from "undici";
 
 // Import Internal Dependencies
 import { authenticate } from "./modules/authenticate.js";
-import { ServerContext } from "./context.js";
+import type { ServerContext } from "./context.js";
 
 export function buildServer(
-  options: FastifyHttpOptions<http.Server> | FastifyHttpsOptions<https.Server>,
+  options: FastifyServerOptions,
   context: ServerContext
 ): FastifyInstance {
   context.grafanaAgent ??= getGlobalDispatcher();
@@ -37,7 +33,7 @@ export function buildServer(
     if (request.method !== "OPTIONS") {
       request.log.info(
         `(${request.id}) response returned "${request.method} ${request.raw.url}",`
-          + ` statusCode: ${reply.raw.statusCode} (${reply.elapsedTime.toFixed(3)}ms)`
+        + ` statusCode: ${reply.raw.statusCode} (${reply.elapsedTime.toFixed(3)}ms)`
       );
     }
   });

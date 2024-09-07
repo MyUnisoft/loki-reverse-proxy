@@ -66,9 +66,9 @@ const server = buildServer(serverOptions, {
 });
 
 server.listen({
-  port: env.SERVER_PORT,
-  host: env.SERVER_HOST
-}, function httpListeningCallback(err: Error, addr: string) {
+  port: env.SERVER_PORT!,
+  host: env.SERVER_HOST!
+}, function httpListeningCallback(err, addr) {
   if (err) {
     server.log.error(err);
     process.exit(1);
