@@ -25,7 +25,7 @@
     "@fastify/http-proxy": "^9.5.0",
     "@openally/timestore": "^1.5.1",
     "fastify": "^4.26.2",
-    "pino": "^9.2.0",
+    "pino": "^9.4.0",
     "pino-loki": "^2.2.1",
     "pino-pretty": "^11.0.0",
     "ua-parser-js": "^1.0.37",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@openally/config.eslint": "^1.0.0",
     "@openally/config.typescript": "^1.0.3",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.5.4",
     "@types/ua-parser-js": "^0.7.39",
     "c8": "^10.1.2",
     "glob": "^11.0.0",
