@@ -1,5 +1,5 @@
 // Import Third-party Dependencies
-import { FastifyBaseLogger } from "fastify";
+import type { FastifyBaseLogger } from "fastify";
 import { TimeStore } from "@openally/timestore";
 import { Agent, Dispatcher, MockAgent } from "undici";
 
