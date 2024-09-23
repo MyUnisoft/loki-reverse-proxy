@@ -22,9 +22,9 @@
   "author": "GENTILHOMME Thomas <gentilhomme.thomas@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@fastify/http-proxy": "^9.5.0",
+    "@fastify/http-proxy": "^10.0.0",
     "@openally/timestore": "^1.5.1",
-    "fastify": "^4.26.2",
+    "fastify": "^5.0.0",
     "pino": "^9.4.0",
     "pino-loki": "^2.2.1",
     "pino-pretty": "^11.0.0",
