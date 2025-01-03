@@ -1,7 +1,7 @@
 // Import Third-party Dependencies
 import fastify, { type FastifyServerOptions, type FastifyInstance } from "fastify";
 import proxy from "@fastify/http-proxy";
-import UAParser from "ua-parser-js";
+import { UAParser } from "ua-parser-js";
 import { getGlobalDispatcher } from "undici";
 
 // Import Internal Dependencies
