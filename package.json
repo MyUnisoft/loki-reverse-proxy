@@ -35,10 +35,10 @@
   "devDependencies": {
     "@openally/config.eslint": "^2.0.0",
     "@openally/config.typescript": "^1.0.3",
-    "@types/node": "^24.0.3",
+    "@types/node": "^25.2.0",
     "@types/ua-parser-js": "^0.7.39",
     "c8": "^10.1.2",
-    "glob": "^12.0.0",
+    "glob": "^13.0.0",
     "tsx": "^4.7.1",
     "typescript": "^5.4.3"
   }
